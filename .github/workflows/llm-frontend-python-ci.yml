@@ -6,11 +6,13 @@ on:
     paths:
       - 'llm-frontend-python/**'
       - '.github/workflows/llm-frontend-python-ci.yml'
+      - '.trivyignore'
   pull_request:
     branches: [main, master]
     paths:
       - 'llm-frontend-python/**'
       - '.github/workflows/llm-frontend-python-ci.yml'
+      - '.trivyignore'
   workflow_dispatch:
 
 defaults:
