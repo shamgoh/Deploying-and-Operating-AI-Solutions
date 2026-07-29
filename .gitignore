@@ -1,0 +1,27 @@
+# Secrets — never commit real credentials
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+venv/
+.venv/
+
+# DeepEval
+.deepeval/
+.deepeval-cache.json
+.deepeval_telemetry.txt
+
+# Node / promptfoo
+node_modules/
+.promptfoo/
+
+# OS
+.DS_Store
+Thumbs.db
