@@ -4,7 +4,6 @@ import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 METRICS_DIR = Path(__file__).resolve().parent.parent.parent / "metrics"
 
 COST_FILE = METRICS_DIR / "cost_metrics.json"

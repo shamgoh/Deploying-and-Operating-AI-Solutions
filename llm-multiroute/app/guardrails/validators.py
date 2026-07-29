@@ -9,7 +9,7 @@ any of them for a hub-installed validator later without changing the engine.
 """
 
 import re
-from typing import Any, Dict
+from typing import Any
 
 from guardrails.validators import FailResult, PassResult, Validator, register_validator
 
@@ -61,7 +61,7 @@ _PII_PATTERNS = {
 class PromptInjectionDetector(Validator):
     """Flags common prompt-injection / jailbreak phrasing."""
 
-    def validate(self, value: Any, metadata: Dict[str, Any]) -> Any:
+    def validate(self, value: Any, metadata: dict[str, Any]) -> Any:
         matched = [p.pattern for p in _INJECTION_PATTERNS if p.search(value)]
         if matched:
             return FailResult(error_message=f"Prompt injection patterns matched: {matched}")
@@ -72,7 +72,7 @@ class PromptInjectionDetector(Validator):
 class HarmfulContentDetector(Validator):
     """Flags requests for clearly harmful content (weapons, malware, hacking)."""
 
-    def validate(self, value: Any, metadata: Dict[str, Any]) -> Any:
+    def validate(self, value: Any, metadata: dict[str, Any]) -> Any:
         matched = [p.pattern for p in _HARMFUL_CONTENT_PATTERNS if p.search(value)]
         if matched:
             return FailResult(error_message=f"Harmful content patterns matched: {matched}")
@@ -83,11 +83,11 @@ class HarmfulContentDetector(Validator):
 class SecretsPresentDetector(Validator):
     """Detects API keys/tokens/passwords and redacts them when fixed."""
 
-    def validate(self, value: Any, metadata: Dict[str, Any]) -> Any:
+    def validate(self, value: Any, metadata: dict[str, Any]) -> Any:
         matched = [name for name, pattern in _SECRET_PATTERNS.items() if pattern.search(value)]
         if matched:
             redacted = value
-            for name, pattern in _SECRET_PATTERNS.items():
+            for pattern in _SECRET_PATTERNS.values():
                 redacted = pattern.sub("[REDACTED_SECRET]", redacted)
             return FailResult(
                 error_message=f"Potential secret(s) detected: {matched}",
@@ -100,7 +100,7 @@ class SecretsPresentDetector(Validator):
 class PIIDetector(Validator):
     """Detects PII (email/phone/SSN/credit card) and redacts it when fixed."""
 
-    def validate(self, value: Any, metadata: Dict[str, Any]) -> Any:
+    def validate(self, value: Any, metadata: dict[str, Any]) -> Any:
         matched = [name for name, pattern in _PII_PATTERNS.items() if pattern.search(value)]
         if matched:
             redacted = value

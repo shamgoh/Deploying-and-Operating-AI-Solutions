@@ -2,7 +2,7 @@
 output validation, built on top of `guardrails.Guard`.
 """
 
-from typing import Type, TypeVar
+from typing import TypeVar
 
 from guardrails import Guard
 from pydantic import BaseModel
@@ -60,7 +60,7 @@ class GuardrailsEngine:
             SecretsPresentDetector(on_fail="fix"),
             PIIDetector(on_fail="fix"),
         )
-        self._output_guards: dict[Type[BaseModel], Guard] = {}
+        self._output_guards: dict[type[BaseModel], Guard] = {}
 
     def check_input(self, text: str, task_type: str) -> str:
         """Runs all input guards against `text`.
@@ -92,7 +92,7 @@ class GuardrailsEngine:
 
         return sanitized
 
-    def validate_output(self, raw_text: str, model_class: Type[T], task_type: str = "unknown") -> T:
+    def validate_output(self, raw_text: str, model_class: type[T], task_type: str = "unknown") -> T:
         """Validates a raw LLM response string against `model_class`'s schema
         (required fields, types, ranges, allowed enum values) using
         `Guard.for_pydantic`, replacing hand-rolled JSON parsing.
