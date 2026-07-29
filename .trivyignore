@@ -14,3 +14,10 @@ CVE-2026-48962
 CVE-2026-9538
 CVE-2026-48818
 CVE-2026-54283
+
+# perl-base 5.40.1-6 in the python:3.12-slim base image
+# No fix available upstream (status: affected) as of 2026-07-29
+# Affects both llm-multiroute and llm-frontend-python; re-check when Debian patches
+CVE-2026-13221
+CVE-2026-57432
+CVE-2026-57433
